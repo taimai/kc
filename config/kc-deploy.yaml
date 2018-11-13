@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kc
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: kc
+    spec:
+      containers:
+      - name: kc
+        image: registry.your.domain.com/apps/kc:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: kc-secret
+                key: AWS_ACCESS_KEY_ID
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: kc-secret
+                key: AWS_SECRET_ACCESS_KEY
+          - name: ENV
+            valueFrom:
+              configMapKeyRef:
+                name: kc-configmap
+                key: ENV
+          - name: REGION
+            valueFrom:
+              configMapKeyRef:
+                name: kc-configmap
+                key: REGION
+        volumeMounts:
+        - name: rkconfig
+          mountPath: /app/config
+          readOnly: true
+      volumes:
+      - name: rkconfig
+        secret:
+          secretName: kc-config

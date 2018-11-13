@@ -1,0 +1,5 @@
+{
+ "http_port": 8080,
+ "base_domain": "your.domain.com",
+ "hosted_zone_id": "AWS ID for your.domain.com"
+}
