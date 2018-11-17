@@ -2,7 +2,7 @@ PROJECT_ROOT := $(shell pwd)
 VENDOR_PATH  := $(PROJECT_ROOT)/vendor
 GO_FILES = $(shell find . -type f -name '*.go')
 PACKAGES = $(shell ls src/)
-GOPATH = $(shell pwd):$(shell pwd)/vendor:$(shell pwd)/lib/atlantis:$(VENDOR_PATH)
+GOPATH = $(shell pwd):$(shell pwd)/vendor:$(VENDOR_PATH)
 BINARY = kc
 
 all: build
